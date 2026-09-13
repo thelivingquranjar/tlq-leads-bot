@@ -1,4 +1,3 @@
-# trigger deploy
 #!/usr/bin/env python3
 """
 TLQ Prof Series - Daily Lead Research Bot
@@ -32,6 +31,7 @@ MAX_LEADS_PER_DAY = int(os.getenv('MAX_LEADS_PER_DAY', '5'))
 # RSS FEEDS - Berita bisnis Indonesia
 # ============================================================
 RSS_FEEDS = {
+    # Media bisnis mainstream
     'Detik Finance': 'https://finance.detik.com/rss',
     'Kontan': 'https://www.kontan.co.id/rss/nasional',
     'CNBC Indonesia': 'https://www.cnbcindonesia.com/news/rss',
@@ -40,6 +40,19 @@ RSS_FEEDS = {
     'Republika Ekonomi': 'https://ekonomi.republika.co.id/rss',
     'Investor Daily': 'https://investor.id/rss',
     'IDN Finance': 'https://www.idntimes.com/business/rss',
+
+    # Media umum (banyak berita corporate juga)
+    'Detik News': 'https://news.detik.com/rss',
+    'Kompas Nasional': 'https://nasional.kompas.com/rss',
+    'Antara Bisnis': 'https://www.antaranews.com/rss/ekonomi.xml',
+    'Tempo Bisnis': 'https://rss.tempo.co/bisnis',
+    'Tribunnews Bisnis': 'https://www.tribunnews.com/bisnis/rss',
+    'Liputan6 Bisnis': 'https://feed.liputan6.com/rss/bisnis',
+    'Merdeka Uang': 'https://www.merdeka.com/uang/feed/',
+    'Republika Khazanah': 'https://khazanah.republika.co.id/rss',
+    'Republika News': 'https://news.republika.co.id/rss',
+    'CNN Ekonomi': 'https://www.cnnindonesia.com/ekonomi/rss',
+    'Detik Edu': 'https://news.detik.com/edu/rss',
 }
 
 # ============================================================
@@ -364,10 +377,11 @@ def find_leads(articles):
     for article in articles:
         scores = score_article(article)
 
-        # Filter: harus punya minimal industry fit + signal + Jabodetabek
-        if scores['industry'] < 3:
+        # Filter: threshold longgar biar dapet lebih banyak lead
+        # Minimum: ada industry fit + signal + jabodetabek
+        if scores['industry'] < 2:
             continue
-        if scores['signal'] < 3:
+        if scores['signal'] < 2:
             continue
         if scores['location'] == 0:
             continue
