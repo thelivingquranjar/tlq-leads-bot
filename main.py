@@ -1,3 +1,4 @@
+# trigger deploy
 #!/usr/bin/env python3
 """
 TLQ Prof Series - Daily Lead Research Bot
